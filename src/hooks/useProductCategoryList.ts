@@ -4,9 +4,9 @@ import { GetProductCategorieList } from "../api/product";
 
 
 const useProductCategoryList = () => {
-     const [list, setList] = useState([]);
+     const [list, setList] = useState<string[]>([]);
      const [loading, setLoading] = useState(false);
-     const [error, setError] = useState(null);
+     const [error, setError] = useState<unknown>(null);
 
      useEffect(() => {
         const fetchProductCategoriesList = async () => {

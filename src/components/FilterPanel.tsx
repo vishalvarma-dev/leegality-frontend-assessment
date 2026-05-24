@@ -137,7 +137,7 @@ const FilterPanel = ({
       </div>
 
       {/* Brands */}
-      {brands?.length > 0 && (
+      {brands && brands.length > 0 && (
         <div>
           <h3 className="font-semibold text-gray-900 mb-3">Brands</h3>
           <div className="flex flex-col gap-2.5 max-h-[200px] overflow-y-auto pr-2">
