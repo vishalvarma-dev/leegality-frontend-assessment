@@ -11,6 +11,7 @@ const SearchBar = () => {
   const { products, loading } = useProductSearch(query);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  
   useEffect(() => {
     if (loading) setIsPending(false);
   }, [loading]);

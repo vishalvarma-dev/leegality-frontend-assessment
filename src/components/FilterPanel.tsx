@@ -96,14 +96,14 @@ const FilterPanel = ({
           onClick={handleApply}
           className="w-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white text-sm font-medium py-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-500"
         >
-          Apply Price Filter
+          Apply 
         </button>
       </div>
 
       {/* Brands */}
       <div>
         <h3 className="font-semibold text-gray-900 mb-3">Brands</h3>
-        <div className="flex flex-col gap-2.5 max-h-[250px] overflow-y-auto pr-2">
+        <div className="flex flex-col gap-2.5 max-h-[200px] overflow-y-auto pr-2">
           {brands.map((brand) => (
             <label key={brand} className="flex items-center gap-3 cursor-pointer group">
               <input

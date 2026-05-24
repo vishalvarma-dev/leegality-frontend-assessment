@@ -38,7 +38,8 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   const toggleCategory = (item: string) => {
     setSelectedCategories((prev) => {
       const newSelection = prev.includes(item) ? [] : [item];
-      setAppliedFilters(current => ({ ...current, categories: newSelection }));
+      setSelectedBrands([]); // Clear brands when category changes
+      setAppliedFilters(current => ({ ...current, categories: newSelection, brands: [] }));
       return newSelection;
     });
   };

@@ -22,7 +22,7 @@ const SkeletonCard = () => (
 
 const ProductListing = () => {
   const { appliedFilters } = useFilterContext();
-  const { products, totalPages, currentPage, setCurrentPage, loading } = useProducts(appliedFilters);
+  const { products, totalPages, currentPage, setCurrentPage, loading, availableBrands } = useProducts(appliedFilters);
   const { list, loading: categoryLoading } = useProductCategoryList();
 
   const renderContent = () => {
@@ -60,7 +60,7 @@ const ProductListing = () => {
 
   return (
     <div className="flex gap-4">
-      <FilterPanel list={list} loading={categoryLoading} />
+      <FilterPanel list={list} brands={availableBrands} loading={categoryLoading} />
       <div className="flex-1 px-4 py-4">
         {renderContent()}
       </div>
