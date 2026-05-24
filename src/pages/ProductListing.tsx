@@ -5,6 +5,7 @@ import ProductGrid from "../components/ProductGrid";
 import useProductCategoryList from "../hooks/useProductCategoryList";
 import useProducts from "../hooks/useProducts";
 import { useFilterContext } from "../context/FilterContext";
+import { useLayoutContext } from "../hooks/useLayoutContext";
 
 const SkeletonCard = () => (
   <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 flex flex-col animate-pulse">
@@ -24,6 +25,7 @@ const ProductListing = () => {
   const { appliedFilters } = useFilterContext();
   const { products, totalPages, currentPage, setCurrentPage, loading, availableBrands } = useProducts(appliedFilters);
   const { list, loading: categoryLoading } = useProductCategoryList();
+  const { isFilterOpen, onCloseFilter } = useLayoutContext();
 
   const renderContent = () => {
     if (loading) {
@@ -60,8 +62,14 @@ const ProductListing = () => {
 
   return (
     <div className="flex gap-4">
-      <FilterPanel list={list} brands={availableBrands} loading={categoryLoading} />
-      <div className="flex-1 px-4 py-4">
+      <FilterPanel
+        list={list}
+        brands={availableBrands}
+        loading={categoryLoading}
+        isOpen={isFilterOpen}
+        onClose={onCloseFilter}
+      />
+      <div className="flex-1 px-4 py-4 min-w-0">
         {renderContent()}
       </div>
     </div>
