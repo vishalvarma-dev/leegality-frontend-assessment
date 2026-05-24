@@ -2,45 +2,37 @@
 
 ### Product Listing & Detail Page (Amazon-style)
 
-A fully functional e-commerce product browsing application built with **React 19 + TypeScript + Vite**, powered by the [DummyJSON Products API](https://dummyjson.com/docs/products).
+A simple e-commerce product browsing application built using React, TypeScript, and Vite with data fetched from the DummyJSON Products API.
 
 ---
 
-## 📦 Tech Stack
+# 📦 Tech Stack
 
-| Layer      | Technology                       |
-| ---------- | -------------------------------- |
-| Framework  | React 19 (Functional Components) |
-| Language   | TypeScript                       |
-| Build Tool | Vite                             |
-| Routing    | React Router v7                  |
-| Styling    | Tailwind CSS v4                  |
-| Icons      | Lucide React                     |
-| HTTP       | Native `fetch` API               |
+- React
+- TypeScript
+- Vite
+- React Router
+- Tailwind CSS
+- Native Fetch API
 
 ---
 
-## 🚀 Setup Instructions
+# 🚀 Setup Instructions
 
-### Prerequisites
-
-- **Node.js** ≥ 18.x
-- **npm** ≥ 9.x (comes bundled with Node.js)
-
-### 1. Clone the Repository
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/<your-username>/leegality-frontend-assessment.git
 cd leegality-frontend-assessment
 ```
 
-### 2. Install Dependencies
+## 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Start the Development Server
+## 3. Start the Development Server
 
 ```bash
 npm run dev
@@ -48,21 +40,13 @@ npm run dev
 
 The app will be available at **http://localhost:5173** by default.
 
-### 4. Build for Production
+## 4. Build for Production
 
 ```bash
 npm run build
 ```
 
 The optimised output will be placed in the `dist/` folder.
-
-### 5. Preview Production Build
-
-```bash
-npm run preview
-```
-
----
 
 ## 📁 Project Structure
 
@@ -99,7 +83,32 @@ src/
 
 ---
 
-## ✅ Assessment Requirements Coverage
+## ✅ Features Implemented
+
+### Product Listing Page
+
+- Product grid layout
+- Product cards with: image, title, price, rating
+- Pagination support
+- Loading state & Error handling
+- Filters:
+  - Category filter
+  - Brand filter
+  - Price range filter
+  - Combined filter behaviour
+  - Pagination reset on filter change
+
+### Product Detail Page
+
+- Product details: image, title, price, rating, description, brand, category
+- Navigation:
+  - Product card → detail page
+  - Back button support
+  - Filters remain applied after navigating back
+
+---
+
+## 🎯 Assessment Requirements Coverage
 
 | Requirement                                               | Status | Notes                                           |
 | --------------------------------------------------------- | ------ | ----------------------------------------------- |
@@ -131,13 +140,11 @@ src/
 
 3. **Price filtering is client-side** — DummyJSON does not expose a server-side price range parameter, so price min/max filtering is applied via `useMemo` on the already-fetched page of products. This means the filter operates on the current page's 12 items, not the entire catalogue.
 
-4. **Apply button for price range** — Immediately filtering on every keystroke in the price inputs would trigger excessive re-renders and a jarring UX. An **Apply** button was added to batch-apply price + all pending changes at once. Category and brand selections apply immediately, matching the requirement for "immediate update".
+4. **`category-list` endpoint used instead of `categories`** — `/products/category-list` returns a simple string array (e.g., `["beauty", "fragrances", ...]`), which is more convenient than `/products/categories` which returns an array of category objects. Both are valid; the simpler format was preferred.
 
-5. **`category-list` endpoint used instead of `categories`** — `/products/category-list` returns a simple string array (e.g., `["beauty", "fragrances", ...]`), which is more convenient than `/products/categories` which returns an array of category objects. Both are valid; the simpler format was preferred.
+5. **12 products per page** — A page size of 12 was chosen as it divides cleanly into a 4-column, 3-column, and 2-column grid, keeping every row complete on common screen widths.
 
-6. **12 products per page** — A page size of 12 was chosen as it divides cleanly into a 4-column, 3-column, and 2-column grid, keeping every row complete on common screen widths.
-
-7. **No search-to-filter integration** — The `SearchBar` and `useProductSearch` hook exist in the codebase but are decoupled from the main filter flow to avoid conflicting state between keyword search and structured filters.
+6. **No search-to-filter integration** — The `SearchBar` and `useProductSearch` hook exist in the codebase but are decoupled from the main filter flow to avoid conflicting state between keyword search and structured filters.
 
 ---
 
@@ -181,6 +188,13 @@ All components, hooks, API functions, and context are fully typed. The `Product`
 
 ---
 
+## ⚠️ Challenges Faced
+
+- **Combined Filtering**: The main challenge was making category, brand, and price filters work together correctly while keeping pagination in sync.
+- **Filter Persistence**: Another challenge was preserving filters after navigating to the product detail page and returning back to the listing page.
+
+---
+
 ## 🔮 Improvements if Given More Time
 
 ### Functionality
@@ -188,25 +202,37 @@ All components, hooks, API functions, and context are fully typed. The `Product`
 - **URL-synced filters** — Encode active filters into query params (e.g., `?category=beauty&minPrice=10&brand=Essence`). This would make filtered views shareable and survive hard refreshes.
 - **Debounced price inputs** — Apply price filters automatically after a short debounce delay (e.g., 300 ms) instead of requiring an Apply button, improving UX without causing excessive re-renders.
 - **Full-catalogue price filtering** — Fetch all products in a category once, cache them, and apply price filtering on the full set rather than just the current page.
-- **Search integration** — Wire the existing `SearchBar` and `useProductSearch` into the main filter flow, clearing structured filters when a keyword search is active and vice-versa.
 - **Sort options** — Add a "Sort by" dropdown (Price: Low → High, Rating, Newest) using the API's `sortBy` and `order` params.
 - **Wishlist / Favourites** — Allow users to heart-save products, persisted to `localStorage`.
 
 ### UX & Accessibility
 
-- **Keyboard-accessible filter panel** — Ensure all checkboxes and inputs are navigable via keyboard with visible focus rings.
-- **ARIA live regions** — Announce product count changes to screen readers when filters are applied.
+- **Keyboard-accessible filter panel** — Ensure all checkboxes and inputs are navigable via keyboard with visible focus rings
 - **Empty-state illustrations** — Replace the generic icon with a branded illustration for zero-result states.
-- **Mobile drawer for filters** — Collapse the filter sidebar into a slide-up drawer on small screens instead of hiding it.
 - **Toast notifications** — Show brief feedback toasts on filter apply / error states.
 
 ### Performance & Code Quality
 
 - **React Query / SWR** — Replace manual `useState`/`useEffect` data fetching with a dedicated async-state library for built-in caching, deduplication, background refetch, and stale-while-revalidate.
 - **Virtualised product grid** — For very large lists, use a windowing library (e.g., `react-window`) to avoid rendering off-screen cards.
-- **Image lazy loading** — Add `loading="lazy"` and `decoding="async"` to all product images (or use a proper Image component) to defer off-screen images.
-- **Unit & integration tests** — Add Vitest unit tests for hooks (`useProducts`, filter logic) and React Testing Library tests for `FilterPanel`, `ProductCard`, and `Pagination`.
-- **E2E tests** — Playwright or Cypress tests for the core user flows: filter → navigate → back → filters preserved.
-- **Storybook** — Document reusable components (`Rating`, `Pagination`, `ProductCard`) in isolation.
+- **Image lazy loading** — Add `loading="lazy"` and `decoding="async"` to all product images.
 
 ---
+
+## 🌐 API Endpoints Used
+
+- `GET /products`
+- `GET /products/category-list` (or `GET /products/categories`)
+- `GET /products/category/{category}`
+- `GET /products/{id}`
+
+**DummyJSON API:** [https://dummyjson.com/docs/products](https://dummyjson.com/docs/products)
+
+---
+
+## 📌 Notes
+
+- Functional components and React hooks are used throughout the project.
+- Tailwind CSS is used for styling.
+- Error and loading states are handled properly for API requests.
+- The project structure is organised to keep components reusable and maintainable.
