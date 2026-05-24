@@ -29,31 +29,37 @@ const Pagination = ({
   const pages = getPageNumbers(currentPage, totalPages);
 
   return (
-    <div className={cn("flex gap-1 mx-auto items-center", classNames?.root)}>
+    <div className={cn("flex gap-1.5 mx-auto items-center", classNames?.root)}>
+      {/* Previous */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={cn(
-          "flex items-center px-3 py-2 border rounded-md hover:bg-gray-100 disabled:opacity-40 disabled:hover:bg-transparent transition-colors",
+          "flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium border transition-all duration-150",
+          "bg-white border-gray-200 text-gray-600 hover:bg-orange-50 hover:border-orange-300 hover:text-orange-600",
+          "disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-200 disabled:hover:text-gray-600",
           classNames?.previous
         )}
       >
-        <ChevronLeft size={20} />
-        <span className="ml-1">Previous</span>
+        <ChevronLeft size={16} />
+        <span>Prev</span>
       </button>
 
+      {/* Page numbers */}
       {pages.map((page, index) =>
         page === "..." ? (
-          <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-500">...</span>
+          <span key={`ellipsis-${index}`} className="px-2 py-1.5 text-gray-400 text-sm select-none">
+            &hellip;
+          </span>
         ) : (
           <button
             key={page}
             onClick={() => onPageChange(page)}
             className={cn(
-              "px-4 py-2 border rounded-md transition-colors",
+              "w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium border transition-all duration-150",
               page === currentPage
-                ? "bg-orange-500 text-white border-orange-600 font-bold"
-                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50",
+                ? "bg-orange-500 text-white border-orange-500 shadow-sm shadow-orange-200 scale-105"
+                : "bg-white text-gray-600 border-gray-200 hover:bg-orange-50 hover:border-orange-300 hover:text-orange-600",
               classNames?.page
             )}
           >
@@ -62,19 +68,22 @@ const Pagination = ({
         )
       )}
 
+      {/* Next */}
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={cn(
-          "flex items-center px-3 py-2 border rounded-md hover:bg-gray-100 disabled:opacity-40 disabled:hover:bg-transparent transition-colors",
+          "flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium border transition-all duration-150",
+          "bg-white border-gray-200 text-gray-600 hover:bg-orange-50 hover:border-orange-300 hover:text-orange-600",
+          "disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-200 disabled:hover:text-gray-600",
           classNames?.next
         )}
       >
-        <span className="mr-1">Next</span>
-        <ChevronRight size={20} />
+        <span>Next</span>
+        <ChevronRight size={16} />
       </button>
     </div>
   );
 };
 
-export default Pagination;
+export default Pagination;
